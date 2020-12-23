@@ -16,7 +16,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Clean TMP, apt-get cache and other stuff to make the image smaller
 # Add unicode support
 # Update SteamCMD and verify latest version
-WORKDIR ${HOME}
 
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
 	&& echo steam steam/license note '' | debconf-set-selections
@@ -43,7 +42,10 @@ ENV LANGUAGE 'en_US:en'
 
 RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
 
+WORKDIR ${HOME}
+
 RUN su "${USER}" -c \
-	&& steamcmd +quit"
+	"ls -al \
+    && steamcmd +quit"
 
 USER ${USER}
