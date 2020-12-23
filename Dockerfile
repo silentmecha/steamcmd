@@ -45,7 +45,6 @@ RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
 WORKDIR ${HOME}
 
 RUN su "${USER}" -c \
-	"ls -al \
-    && steamcmd +quit"
+    && "steamcmd +quit"
 
 USER ${USER}
