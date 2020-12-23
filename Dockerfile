@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL maintainer="silent@silentmecha.co.za"
 ARG PUID=1000
@@ -45,7 +45,6 @@ RUN ln -s /usr/games/steamcmd /usr/bin/steamcmd
 WORKDIR ${HOME}
 
 RUN su "${USER}" -c \
-	"ls -al \
-    && steamcmd +quit"
+    "steamcmd +quit"
 
 USER ${USER}

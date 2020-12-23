@@ -4,7 +4,7 @@ This repository contains the files needed for the image silentmecha/steamcmd:lat
 
 
 ## Notes
-Currently this is based off of Ubuntu 18.04 as there are known issues with steamcmd and Ubuntu 20.04. Once Ubuntu 20.04 is stable I will update the images
+Currently this is based off of Ubuntu 20.04
 
 ## License
 
