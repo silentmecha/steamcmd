@@ -5,9 +5,12 @@ ARG PUID=1001
 
 # Set environment variables
 ENV USER=steam
-ENV BACKUP_DAILY_LIM=5
-ENV BACKUP_HOURLY_LIM=5
 ENV AUTO_UPDATE=False
+ENV SHARED_DATA="/srv/silentmecha"
+ENV EVENTS_FIFO="${SHARED_DATA}/events.out"
+ENV LOG_FILE="${SHARED_DATA}/server.log"
+ENV HEARTBEAT_INTERVAL=5
+ENV HEARTBEAT_TIMEOUT=7
 
 # Create user for the server
 # This also creates the home directory we later need
@@ -39,8 +42,15 @@ COPY ./src/ssq ${HOME}/ssq
 
 COPY ./src/healthcheck.sh ${HOME}/healthcheck.sh
 
+# Create shared data directory, FIFO for events and log file
+# Set ownerships and permissions
+# Adjust permissions on home directory items
 RUN set -x \
-	&& chown ${USER}:${USER} "${HOME}/ssq" "${HOME}/healthcheck.sh" \
+	&& mkdir -p "${SHARED_DATA}" \
+	&& mkfifo "${EVENTS_FIFO}" \
+	&& touch "${LOG_FILE}" \
+	&& chown ${USER}:${USER} "${HOME}/ssq" "${HOME}/healthcheck.sh" "${SHARED_DATA}" "${EVENTS_FIFO}" "${LOG_FILE}" \
+	&& chmod 700 -R "${SHARED_DATA}" \
 	&& chmod +x "${HOME}/ssq" "${HOME}/healthcheck.sh"
 
 USER ${USER}
