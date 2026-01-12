@@ -55,6 +55,9 @@ RUN set -x \
 
 USER ${USER}
 
+# Expose shared data as volume
+VOLUME ["${SHARED_DATA}"]
+
 # Update SteamCMD and verify latest version
 RUN steamcmd +quit
 
