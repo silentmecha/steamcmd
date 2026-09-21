@@ -4,7 +4,7 @@ set -u
 
 if [[ -z "${STEAMAPP_ID:-}" ]]; then
     printf 'false\n'
-    exit 0
+    exit 1
 fi
 
 if ! CURRENT_BUILD_ID="$(
@@ -14,21 +14,23 @@ if ! CURRENT_BUILD_ID="$(
         ".data[\"${STEAMAPP_ID}\"].depots.branches.public.buildid"
 )"; then
     printf 'false\n'
-    exit 0
+    exit 1
 fi
 
 if [[ ! "${CURRENT_BUILD_ID}" =~ ^[0-9]+$ ]]; then
     printf 'false\n'
-    exit 0
+    exit 1
 fi
 
 if ! INSTALLED_BUILD_ID="$(steam-buildid 2>/dev/null)"; then
     printf 'false\n'
-    exit 0
+    exit 1
 fi
 
 if [[ "${INSTALLED_BUILD_ID}" == "${CURRENT_BUILD_ID}" ]]; then
     printf 'true\n'
-else
-    printf 'false\n'
+    exit 0
 fi
+
+printf 'false\n'
+exit 1
