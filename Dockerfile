@@ -51,6 +51,7 @@ WORKDIR "${HOME}"
 
 COPY ./src/ssq "${HOME}/ssq"
 COPY ./src/healthcheck.sh "${HOME}/healthcheck.sh"
+COPY ./src/steam-buildid.sh /usr/local/bin/steam-buildid
 
 # Create persistent save-data directory.
 RUN set -x \
