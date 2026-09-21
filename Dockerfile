@@ -52,6 +52,15 @@ WORKDIR "${HOME}"
 COPY ./src/ssq "${HOME}/ssq"
 COPY ./src/healthcheck.sh "${HOME}/healthcheck.sh"
 COPY ./src/steam-buildid.sh /usr/local/bin/steam-buildid
+COPY ./src/steam-update-check.sh /usr/local/bin/steam-update-check
+
+# Update permissions for helper scripts.
+RUN set -x \
+    && chmod +x \
+        /usr/local/bin/steam-buildid \
+        /usr/local/bin/steam-update-check \
+        "${HOME}/ssq" \
+        "${HOME}/healthcheck.sh"
 
 # Create persistent save-data directory.
 RUN set -x \
